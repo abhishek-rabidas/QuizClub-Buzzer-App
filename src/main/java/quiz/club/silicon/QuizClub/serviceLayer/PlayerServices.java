@@ -25,7 +25,7 @@ public class PlayerServices {
         player.setBuzzerActive(false);
         player.setRegistrationTimeStamp(LocalDateTime.now());
         playerRepository.save(player);
-        logger.info("{} registered successfully", player.getName());
+        System.out.println(player.getName() + " registered successfully");
     }
 
     public void pressBuzzer(String id) {
@@ -38,6 +38,6 @@ public class PlayerServices {
         Player player = playerRepository.findOneById(id);
         player.setBuzzerActive(true);
         playerRepository.save(player);
-        logger.info("{} pressed Buzzer", player.getName());
+        System.out.println(player.getName() + " pressed buzzer");
     }
 }
