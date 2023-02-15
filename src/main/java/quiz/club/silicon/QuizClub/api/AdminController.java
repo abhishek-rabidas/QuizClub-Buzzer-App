@@ -24,4 +24,9 @@ public class AdminController {
         adminServices.resetBuzzers();
     }
 
+    @GetMapping
+    public String getActivePlayer() {
+        return adminServices.getActivePlayer();
+    }
+
 }

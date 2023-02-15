@@ -5,4 +5,5 @@ import quiz.club.silicon.QuizClub.dao.entity.Player;
 
 public interface PlayerRepository extends MongoRepository<Player, String> {
     Player findOneById(String id);
+    Player findOneByIsBuzzerActiveTrue();
 }

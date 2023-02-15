@@ -26,4 +26,8 @@ public class AdminServices {
         }
         System.out.println("All Players Buzzers Reset");
     }
+
+    public String getActivePlayer() {
+        return playerRepository.findOneByIsBuzzerActiveTrue().getName();
+    }
 }

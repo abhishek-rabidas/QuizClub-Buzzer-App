@@ -19,13 +19,13 @@ public class PlayerServices {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public void registerPlayer(SignUpRequest request) {
+    public Player registerPlayer(SignUpRequest request) {
         Player player = new Player();
         player.setName(request.getName());
         player.setBuzzerActive(false);
         player.setRegistrationTimeStamp(LocalDateTime.now());
-        playerRepository.save(player);
         System.out.println(player.getName() + " registered successfully");
+        return playerRepository.save(player);
     }
 
     public void pressBuzzer(String id) {
