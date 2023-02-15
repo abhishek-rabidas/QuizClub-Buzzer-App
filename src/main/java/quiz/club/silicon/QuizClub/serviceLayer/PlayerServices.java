@@ -1,7 +1,5 @@
 package quiz.club.silicon.QuizClub.serviceLayer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quiz.club.silicon.QuizClub.dao.entity.Player;
@@ -13,8 +11,6 @@ import java.util.List;
 
 @Service
 public class PlayerServices {
-
-    final Logger logger = LoggerFactory.getLogger(PlayerServices.class);
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -28,16 +24,18 @@ public class PlayerServices {
         return playerRepository.save(player);
     }
 
-    public void pressBuzzer(String id) {
-        List<Player> players = playerRepository.findAll();
-        for (Player player : players) {
-            player.setBuzzerActive(false);
-            playerRepository.save(player);
-        }
+    public Player getPlayer(String id) {
+        return playerRepository.findOneById(id);
+    }
 
-        Player player = playerRepository.findOneById(id);
-        player.setBuzzerActive(true);
-        playerRepository.save(player);
-        System.out.println(player.getName() + " pressed buzzer");
+    public void pressBuzzer(String id) {
+        if (playerRepository.findOneByIsBuzzerActiveTrue() == null) {
+            Player player = playerRepository.findOneById(id);
+            player.setBuzzerActive(true);
+            playerRepository.save(player);
+            System.out.println(player.getName() + " pressed buzzer");
+        } else {
+            throw new RuntimeException("Buzzer Already Pressed");
+        }
     }
 }

@@ -10,6 +10,7 @@ import quiz.club.silicon.QuizClub.serviceLayer.PlayerServices;
 
 @RestController
 @RequestMapping("/api/player")
+@CrossOrigin
 public class PlayerController {
 
     @Autowired
@@ -25,9 +26,22 @@ public class PlayerController {
     }
 
     @PostMapping("/pressBuzzer/{id}")
-    public void pressBuzzer(@PathVariable("id") String id) {
-        playerServices.pressBuzzer(id);
+    public ResponseEntity<?> pressBuzzer(@PathVariable("id") String id) {
+        try {
+            playerServices.pressBuzzer(id);
+            return ResponseEntity.ok().body("Buzzer Pressed");
+        } catch (Exception e) {
+            return ResponseEntity.status(888).body(e.getMessage());
+        }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPlayer(@PathVariable("id") String id) {
+        try {
+            return ResponseEntity.ok(playerServices.getPlayer(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 
 }
