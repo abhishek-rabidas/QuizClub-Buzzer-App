@@ -38,5 +38,6 @@ public class PlayerServices {
         Player player = playerRepository.findOneById(id);
         player.setBuzzerActive(true);
         playerRepository.save(player);
+        logger.info("{} pressed Buzzer", player.getName());
     }
 }

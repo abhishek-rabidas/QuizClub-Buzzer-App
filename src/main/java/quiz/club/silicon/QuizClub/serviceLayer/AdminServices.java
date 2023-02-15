@@ -28,5 +28,6 @@ public class AdminServices {
             player.setBuzzerActive(false);
             playerRepository.save(player);
         }
+        logger.info("All Players Buzzers Reset");
     }
 }
