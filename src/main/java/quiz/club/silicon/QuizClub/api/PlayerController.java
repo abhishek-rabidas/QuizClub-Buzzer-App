@@ -8,6 +8,8 @@ import quiz.club.silicon.QuizClub.dao.entity.Player;
 import quiz.club.silicon.QuizClub.dto.SignUpRequest;
 import quiz.club.silicon.QuizClub.serviceLayer.PlayerServices;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 @RestController
 @RequestMapping("/api/player")
 @CrossOrigin
@@ -15,6 +17,8 @@ public class PlayerController {
 
     @Autowired
     private PlayerServices playerServices;
+
+    final ReentrantLock reentrantLock = new ReentrantLock();
 
     @PostMapping("/add")
     public ResponseEntity<?> registerPlayer(@RequestBody SignUpRequest request) {
@@ -28,10 +32,13 @@ public class PlayerController {
     @PostMapping("/pressBuzzer/{id}")
     public ResponseEntity<?> pressBuzzer(@PathVariable("id") String id) {
         try {
+            reentrantLock.lock();
             playerServices.pressBuzzer(id);
             return ResponseEntity.ok().body("Buzzer Pressed");
         } catch (Exception e) {
             return ResponseEntity.status(888).body(e.getMessage());
+        } finally {
+            reentrantLock.unlock();
         }
     }
 
